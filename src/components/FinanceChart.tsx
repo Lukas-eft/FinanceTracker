@@ -72,9 +72,7 @@ export const FinanceChart: React.FC<FinanceChartProps> = ({ items, total }) => {
             <div className="w-24 h-24 rounded-full border-4 border-dashed border-gray-100 flex items-center justify-center">
               <PieChartIcon className="w-10 h-10" />
             </div>
-            <p className="text-sm">
-              Fügen Sie Daten hinzu, um das Diagramm zu sehen.
-            </p>
+            <p className="text-sm">Add Data To Show Diagram.</p>
           </div>
         )}
       </div>
@@ -100,7 +98,7 @@ export const FinanceChart: React.FC<FinanceChartProps> = ({ items, total }) => {
           </div>
           <div className="space-y-1">
             <p className="text-[9px] md:text-[10px] text-gray-400 uppercase tracking-widest font-bold">
-              Durchschnitt
+              Average
             </p>
             <p className="text-lg md:text-xl font-semibold">
               {(total / items.length).toLocaleString("de-DE", {

@@ -101,10 +101,10 @@ export default function FinanceVisualizer() {
           <div className="space-y-1">
             <h1 className="text-2xl md:text-3xl font-light tracking-tight flex items-center gap-3">
               <Wallet className="w-7 h-7 md:w-8 md:h-8 text-blue-600" />
-              Finanz Visualisierer
+              Finanz Visualizer
             </h1>
             <p className="text-gray-500 text-xs md:text-sm">
-              Verwalten und visualisieren Sie Ihre Ausgaben intuitiv.
+              Manage and visualize your expenses intuitively.
             </p>
           </div>
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
@@ -122,7 +122,7 @@ export default function FinanceVisualizer() {
               </div>
               <div>
                 <p className="text-[10px] md:text-xs text-gray-400 uppercase tracking-wider font-semibold">
-                  Gesamtbetrag
+                  Total
                 </p>
                 <p className="text-xl md:text-2xl font-semibold">
                   {total.toLocaleString("de-DE", {
@@ -157,7 +157,7 @@ export default function FinanceVisualizer() {
           <div className="w-full">
             <header className="mb-4 flex items-center justify-between px-1">
               <h2 className="text-base md:text-lg font-medium">
-                Auflistung der Einträge
+                List of items
               </h2>
               <span className="text-xs text-gray-400 font-medium bg-white border border-gray-100 px-3 py-1 rounded-full shadow-sm">
                 {items.length} Positionen
@@ -167,9 +167,7 @@ export default function FinanceVisualizer() {
               <AnimatePresence initial={false}>
                 {items.length === 0 ? (
                   <div className="bg-white rounded-2xl p-12 text-center border border-gray-100 shadow-sm">
-                    <p className="text-gray-400">
-                      Noch keine Einträge vorhanden.
-                    </p>
+                    <p className="text-gray-400">No Entries Available</p>
                   </div>
                 ) : (
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

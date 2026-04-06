@@ -29,7 +29,7 @@ export const FinanceForm: React.FC<FinanceFormProps> = ({
           ) : (
             <Plus className="w-5 h-5 text-gray-400" />
           )}
-          {editingId ? "Eintrag bearbeiten" : "Neuer Eintrag"}
+          {editingId ? "Edit Entrie" : "New Entrie"}
         </div>
         {editingId && (
           <button
@@ -51,7 +51,7 @@ export const FinanceForm: React.FC<FinanceFormProps> = ({
           <input
             id="name"
             type="text"
-            placeholder="z.B. Miete, Auto..."
+            placeholder="z.B. Rent, Car..."
             value={newName}
             onChange={(e) => setNewName(e.target.value)}
             className="w-full px-4 py-2.5 md:py-3 rounded-xl bg-gray-50 border-none focus:ring-2 focus:ring-blue-500/20 transition-all outline-none text-sm md:text-base"
@@ -83,7 +83,7 @@ export const FinanceForm: React.FC<FinanceFormProps> = ({
               : "bg-blue-600 hover:bg-blue-700 shadow-blue-600/20"
           } disabled:bg-gray-200 disabled:cursor-not-allowed disabled:shadow-none`}
         >
-          {editingId ? "Aktualisieren" : "Hinzufügen"}
+          {editingId ? "Update" : "Add to List"}
         </button>
       </form>
     </section>
