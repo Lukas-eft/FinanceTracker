@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect, type FormEvent } from "react";
+import { useState, useMemo, useEffect, type FormEvent, type FC } from "react";
 import { Wallet, Euro, Download } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import type { FinanceItem } from "../types";
@@ -6,7 +6,11 @@ import { COLORS } from "../constant";
 import { FinanceListItem } from "./FinanceListItem";
 import { FinanceChart } from "./FinanceChart";
 import { FinanceForm } from "./FinanceForm";
-import { SkeletonForm, SkeletonChart, SkeletonListItem } from "./skeletons";
+import {
+  SkeletonForm,
+  SkeletonChart,
+  SkeletonListItem,
+} from "./FinanceSkeletons";
 
 export default function FinanceVisualizer() {
   const [loading, setLoading] = useState(true);

@@ -1,4 +1,4 @@
-import FinanceVisualizer from "./components/FinanceVisualizer.tsx";
+import FinanceVisualizer from "./components/FinanceVisualizer";
 
 export default function App() {
   return (
