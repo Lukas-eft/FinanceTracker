@@ -1,4 +1,4 @@
-import React from "react";
+import { type FC } from "react";
 import {
   PieChart,
   Pie,
@@ -15,13 +15,13 @@ interface FinanceChartProps {
   total: number;
 }
 
-export const FinanceChart: React.FC<FinanceChartProps> = ({ items, total }) => {
+export const FinanceChart: FC<FinanceChartProps> = ({ items, total }) => {
   return (
     <section className="bg-white p-5 md:p-8 rounded-3xl md:rounded-4xl shadow-sm border border-gray-100 h-full min-h-100 flex flex-col">
       <div className="flex items-center justify-between mb-6 md:mb-8">
         <h2 className="text-lg md:text-xl font-medium flex items-center gap-2">
           <PieChartIcon className="w-5 h-5 md:w-6 md:h-6 text-blue-500" />
-          Verteilung
+          Distribution
         </h2>
       </div>
 
@@ -51,7 +51,7 @@ export const FinanceChart: React.FC<FinanceChartProps> = ({ items, total }) => {
               <Tooltip
                 formatter={(value: any) =>
                   typeof value === "number"
-                    ? value.toLocaleString("de-DE", {
+                    ? value.toLocaleString("en-US", {
                         style: "currency",
                         currency: "EUR",
                       })
@@ -72,7 +72,7 @@ export const FinanceChart: React.FC<FinanceChartProps> = ({ items, total }) => {
             <div className="w-24 h-24 rounded-full border-4 border-dashed border-gray-100 flex items-center justify-center">
               <PieChartIcon className="w-10 h-10" />
             </div>
-            <p className="text-sm">Add Data To Show Diagram.</p>
+            <p className="text-sm">Add data to see the chart.</p>
           </div>
         )}
       </div>
@@ -81,16 +81,16 @@ export const FinanceChart: React.FC<FinanceChartProps> = ({ items, total }) => {
         <div className="mt-6 md:mt-8 pt-6 md:pt-8 border-t border-gray-50 grid grid-cols-2 sm:grid-cols-4 gap-4">
           <div className="space-y-1">
             <p className="text-[9px] md:text-[10px] text-gray-400 uppercase tracking-widest font-bold">
-              Einträge
+              Entries
             </p>
             <p className="text-lg md:text-xl font-semibold">{items.length}</p>
           </div>
           <div className="space-y-1">
             <p className="text-[9px] md:text-[10px] text-gray-400 uppercase tracking-widest font-bold">
-              Größter Posten
+              Largest Item
             </p>
             <p className="text-lg md:text-xl font-semibold">
-              {Math.max(...items.map((i) => i.amount)).toLocaleString("de-DE", {
+              {Math.max(...items.map((i) => i.amount)).toLocaleString("en-US", {
                 style: "currency",
                 currency: "EUR",
               })}
@@ -101,7 +101,7 @@ export const FinanceChart: React.FC<FinanceChartProps> = ({ items, total }) => {
               Average
             </p>
             <p className="text-lg md:text-xl font-semibold">
-              {(total / items.length).toLocaleString("de-DE", {
+              {(total / items.length).toLocaleString("en-US", {
                 style: "currency",
                 currency: "EUR",
               })}

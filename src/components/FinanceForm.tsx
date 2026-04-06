@@ -1,4 +1,4 @@
-import React, { type FormEvent } from "react";
+import { type FormEvent, type FC } from "react";
 import { Plus, Pencil, X } from "lucide-react";
 
 interface FinanceFormProps {
@@ -11,7 +11,7 @@ interface FinanceFormProps {
   onCancelEdit: () => void;
 }
 
-export const FinanceForm: React.FC<FinanceFormProps> = ({
+export const FinanceForm: FC<FinanceFormProps> = ({
   newName,
   setNewName,
   newAmount,
@@ -29,7 +29,7 @@ export const FinanceForm: React.FC<FinanceFormProps> = ({
           ) : (
             <Plus className="w-5 h-5 text-gray-400" />
           )}
-          {editingId ? "Edit Entrie" : "New Entrie"}
+          {editingId ? "Edit Entry" : "New Entry"}
         </div>
         {editingId && (
           <button
@@ -51,7 +51,7 @@ export const FinanceForm: React.FC<FinanceFormProps> = ({
           <input
             id="name"
             type="text"
-            placeholder="z.B. Rent, Car..."
+            placeholder="e.g. Rent, Car..."
             value={newName}
             onChange={(e) => setNewName(e.target.value)}
             className="w-full px-4 py-2.5 md:py-3 rounded-xl bg-gray-50 border-none focus:ring-2 focus:ring-blue-500/20 transition-all outline-none text-sm md:text-base"
@@ -62,7 +62,7 @@ export const FinanceForm: React.FC<FinanceFormProps> = ({
             htmlFor="amount"
             className="text-[10px] md:text-xs font-semibold text-gray-400 uppercase tracking-wider"
           >
-            Betrag (€)
+            Amount (€)
           </label>
           <input
             id="amount"

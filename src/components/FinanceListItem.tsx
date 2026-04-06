@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState, type FC } from "react";
 import { Trash2, Pencil } from "lucide-react";
 import { motion, useMotionValue, animate } from "motion/react";
 import type { FinanceItem } from "../types";
@@ -11,7 +11,7 @@ interface FinanceListItemProps {
   isEditing: boolean;
 }
 
-export const FinanceListItem: React.FC<FinanceListItemProps> = ({
+export const FinanceListItem: FC<FinanceListItemProps> = ({
   item,
   total,
   onRemove,
@@ -74,13 +74,13 @@ export const FinanceListItem: React.FC<FinanceListItemProps> = ({
           <div className={isEditing ? "text-emerald-600" : ""}>
             <p className="font-medium">{item.name}</p>
             <p className="text-sm text-gray-400">
-              {((item.amount / total) * 100).toFixed(1)}% vom Gesamt
+              {((item.amount / total) * 100).toFixed(1)}% of total
             </p>
           </div>
         </div>
         <div className="flex items-center gap-4">
           <p className="font-semibold text-gray-900">
-            {item.amount.toLocaleString("de-DE", {
+            {item.amount.toLocaleString("en-US", {
               style: "currency",
               currency: "EUR",
             })}

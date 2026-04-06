@@ -1,18 +1,27 @@
-import { useState, useMemo, type FormEvent } from "react";
+import { useState, useMemo, useEffect, type FormEvent } from "react";
 import { Wallet, Euro, Download } from "lucide-react";
-import { AnimatePresence } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
 import type { FinanceItem } from "../types";
 import { COLORS } from "../constant";
 import { FinanceListItem } from "./FinanceListItem";
 import { FinanceChart } from "./FinanceChart";
 import { FinanceForm } from "./FinanceForm";
+import { SkeletonForm, SkeletonChart, SkeletonListItem } from "./skeletons";
 
 export default function FinanceVisualizer() {
+  const [loading, setLoading] = useState(true);
   const [items, setItems] = useState<FinanceItem[]>([
-    { id: "1", name: "Miete", amount: 800, color: COLORS[0] },
-    { id: "2", name: "Lebensmittel", amount: 300, color: COLORS[1] },
-    { id: "3", name: "Freizeit", amount: 150, color: COLORS[2] },
+    { id: "1", name: "Rent", amount: 800, color: COLORS[0] },
+    { id: "2", name: "Groceries", amount: 300, color: COLORS[1] },
+    { id: "3", name: "Leisure", amount: 150, color: COLORS[2] },
   ]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 1500);
+    return () => clearTimeout(timer);
+  }, []);
 
   const [newName, setNewName] = useState("");
   const [newAmount, setNewAmount] = useState("");
@@ -73,7 +82,7 @@ export default function FinanceVisualizer() {
   const exportToCSV = () => {
     if (items.length === 0) return;
 
-    const headers = ["Name", "Betrag (EUR)"];
+    const headers = ["Name", "Amount (EUR)"];
     const csvRows = [
       headers.join(","),
       ...items.map((item) => `"${item.name}",${item.amount.toFixed(2)}`),
@@ -86,7 +95,7 @@ export default function FinanceVisualizer() {
     link.setAttribute("href", url);
     link.setAttribute(
       "download",
-      `finanzen_${new Date().toISOString().split("T")[0]}.csv`,
+      `finance_${new Date().toISOString().split("T")[0]}.csv`,
     );
     link.style.visibility = "hidden";
     document.body.appendChild(link);
@@ -101,7 +110,7 @@ export default function FinanceVisualizer() {
           <div className="space-y-1">
             <h1 className="text-2xl md:text-3xl font-light tracking-tight flex items-center gap-3">
               <Wallet className="w-7 h-7 md:w-8 md:h-8 text-blue-600" />
-              Finanz Visualizer
+              Finance Visualizer
             </h1>
             <p className="text-gray-500 text-xs md:text-sm">
               Manage and visualize your expenses intuitively.
@@ -122,10 +131,10 @@ export default function FinanceVisualizer() {
               </div>
               <div>
                 <p className="text-[10px] md:text-xs text-gray-400 uppercase tracking-wider font-semibold">
-                  Total
+                  Total Amount
                 </p>
                 <p className="text-xl md:text-2xl font-semibold">
-                  {total.toLocaleString("de-DE", {
+                  {total.toLocaleString("en-US", {
                     style: "currency",
                     currency: "EUR",
                   })}
@@ -138,39 +147,71 @@ export default function FinanceVisualizer() {
         <div className="space-y-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
             <div className="lg:col-span-4">
-              <FinanceForm
-                newName={newName}
-                setNewName={setNewName}
-                newAmount={newAmount}
-                setNewAmount={setNewAmount}
-                editingId={editingId}
-                onSubmit={handleSubmit}
-                onCancelEdit={cancelEdit}
-              />
+              {loading ? (
+                <SkeletonForm />
+              ) : (
+                <FinanceForm
+                  newName={newName}
+                  setNewName={setNewName}
+                  newAmount={newAmount}
+                  setNewAmount={setNewAmount}
+                  editingId={editingId}
+                  onSubmit={handleSubmit}
+                  onCancelEdit={cancelEdit}
+                />
+              )}
             </div>
 
             <div className="lg:col-span-8">
-              <FinanceChart items={items} total={total} />
+              {loading ? (
+                <SkeletonChart />
+              ) : (
+                <FinanceChart items={items} total={total} />
+              )}
             </div>
           </div>
 
           <div className="w-full">
             <header className="mb-4 flex items-center justify-between px-1">
               <h2 className="text-base md:text-lg font-medium">
-                List of items
+                List of Items
               </h2>
               <span className="text-xs text-gray-400 font-medium bg-white border border-gray-100 px-3 py-1 rounded-full shadow-sm">
-                {items.length} Positionen
+                {items.length} Positions
               </span>
             </header>
             <div className="max-h-200 overflow-y-auto pr-1">
-              <AnimatePresence initial={false}>
-                {items.length === 0 ? (
-                  <div className="bg-white rounded-2xl p-12 text-center border border-gray-100 shadow-sm">
-                    <p className="text-gray-400">No Entries Available</p>
-                  </div>
+              <AnimatePresence initial={false} mode="wait">
+                {loading ? (
+                  <motion.div
+                    key="loading-skeleton"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="grid grid-cols-1 md:grid-cols-2 gap-4"
+                  >
+                    {[1, 2, 3, 4].map((i) => (
+                      <SkeletonListItem key={i} />
+                    ))}
+                  </motion.div>
+                ) : items.length === 0 ? (
+                  <motion.div
+                    key="empty-state"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="bg-white rounded-2xl p-12 text-center border border-gray-100 shadow-sm"
+                  >
+                    <p className="text-gray-400">No entries yet.</p>
+                  </motion.div>
                 ) : (
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <motion.div
+                    key="items-list"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="grid grid-cols-1 md:grid-cols-2 gap-4"
+                  >
                     {items.map((item) => (
                       <FinanceListItem
                         key={item.id}
@@ -181,7 +222,7 @@ export default function FinanceVisualizer() {
                         isEditing={editingId === item.id}
                       />
                     ))}
-                  </div>
+                  </motion.div>
                 )}
               </AnimatePresence>
             </div>
